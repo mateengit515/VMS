@@ -19,7 +19,6 @@ const VoterManagementTable: React.FC<Props> = ({
   filterQuery = { name: "", value: "" },
   inchargeFilter = "",
   voterList,
-  selectedColumns = [], 
   onStatusChange,
   onInchargeChange,
 }) => {
