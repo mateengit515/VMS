@@ -1,0 +1,81 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selector-separator {
+    background: lightgrey;
+    height: 1px;
+    margin: 16px 0 16px 0;
+    width: 100%;
+}
+
+.filter-option {
+    font-weight: 200;
+    margin: 0px 0px 0px 20px;
+    font-family: math;
+}
+
+.filter-box {
+    position: fixed;
+    padding: 15px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    background-color: white;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+    text-align: left;
+    max-height: -webkit-fill-available;
+    overflow: auto;
+}
+ 
+.filter-tab {
+    font-weight: 200;
+    margin: -7px 0px 0px 18px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 12px;
+}
+
+.cancel-button {
+    background: none;
+    color: blue;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+.apply-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.selectedFilterOption {
+  background-color: blue;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.down-arrow-img {
+    height: 11px;
+    width: 15px;
+    margin-left: 5px;
+}
+
+.filter-icon-img {
+    height: 16px;
+    width: 16px;
+    margin-left: 5px;
+}

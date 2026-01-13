@@ -1,0 +1,65 @@
+.status-dropdown {
+  width: 140px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+
+/* 🟡 In Progress */
+.status-dropdown.in-progress {
+ 
+  background-color: #ffae00;
+}
+
+/* ✅ Completed */
+.status-dropdown.completed {
+  
+  background-color: #009649;
+}
+
+/* 🔴 Delayed */
+.status-dropdown.delayed {
+  background-color: #f44336;
+}
+
+/* Hover effect for better UX */
+.status-dropdown:hover {
+  opacity: 0.9;
+}
+/* Table */
+.assignments-table-wrap {
+  width: 100%;
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e6e9ee;
+  padding: 8px;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+.assignments-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.assignments-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.assignments-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #374151;
+  vertical-align: middle;
+}

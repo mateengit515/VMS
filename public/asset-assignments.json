@@ -1,0 +1,112 @@
+{
+  "list": [
+    {
+      "asset-number": "AST-001",
+      "asset-description": "Excavator 3000",
+      "employee": { "code": "EMP-123", "name": "Ahmed Al-Rashid" },
+      "role": "Inspector",
+      "assigned-date": "2024-01-15",
+      "expected-date": "2024-01-25",
+      "status": "In Progress"
+    },
+    {
+      "asset-number": "AST-002",
+      "asset-description": "Loader 2000",
+      "employee": { "code": "EMP-456", "name": "Sara Mohammed" },
+      "role": "Operator",
+      "assigned-date": "2024-02-01",
+      "expected-date": "2024-02-10",
+      "status": "Completed"
+    },
+    {
+      "asset-number": "AST-003",
+      "asset-description": "Bulldozer D85",
+      "employee": { "code": "EMP-789", "name": "John Mathew" },
+      "role": "Technician",
+      "assigned-date": "2024-03-05",
+      "expected-date": "2024-03-12",
+      "status": "In Progress"
+    },
+    {
+      "asset-number": "AST-004",
+      "asset-description": "Backhoe 420E",
+      "employee": { "code": "EMP-321", "name": "Fatima Al-Hassan" },
+      "role": "Operator",
+      "assigned-date": "2024-03-15",
+      "expected-date": "2024-03-28",
+      "status": "Delayed"
+    },
+    {
+      "asset-number": "AST-005",
+      "asset-description": "Crane RT550",
+      "employee": { "code": "EMP-654", "name": "Mohammed Bilal" },
+      "role": "Inspector",
+      "assigned-date": "2024-04-01",
+      "expected-date": "2024-04-11",
+      "status": "Completed"
+    },
+    {
+      "asset-number": "AST-006",
+      "asset-description": "Compactor CP56B",
+      "employee": { "code": "EMP-872", "name": "Ravi Kumar" },
+      "role": "Technician",
+      "assigned-date": "2024-04-10",
+      "expected-date": "2024-04-20",
+      "status": "In Progress"
+    },
+    {
+      "asset-number": "AST-007",
+      "asset-description": "Grader 120K2",
+      "employee": { "code": "EMP-224", "name": "Linda George" },
+      "role": "Operator",
+      "assigned-date": "2024-05-05",
+      "expected-date": "2024-05-18",
+      "status": "Completed"
+    },
+    {
+      "asset-number": "AST-008",
+      "asset-description": "Forklift H50FT",
+      "employee": { "code": "EMP-998", "name": "Salman Qureshi" },
+      "role": "Inspector",
+      "assigned-date": "2024-05-12",
+      "expected-date": "2024-05-20",
+      "status": "Delayed"
+    },
+    {
+      "asset-number": "AST-009",
+      "asset-description": "Dump Truck 773G",
+      "employee": { "code": "EMP-141", "name": "Sophia Thomas" },
+      "role": "Technician",
+      "assigned-date": "2024-06-01",
+      "expected-date": "2024-06-15",
+      "status": "In Progress"
+    },
+    {
+      "asset-number": "AST-010",
+      "asset-description": "Excavator 320D2",
+      "employee": { "code": "EMP-552", "name": "George Mathew" },
+      "role": "Operator",
+      "assigned-date": "2024-06-10",
+      "expected-date": "2024-06-25",
+      "status": "Completed"
+    },
+    {
+      "asset-number": "AST-011",
+      "asset-description": "Skid Steer 242D",
+      "employee": { "code": "EMP-777", "name": "Ali Rehman" },
+      "role": "Inspector",
+      "assigned-date": "2024-07-02",
+      "expected-date": "2024-07-12",
+      "status": "In Progress"
+    },
+    {
+      "asset-number": "AST-012",
+      "asset-description": "Wheel Loader 966H",
+      "employee": { "code": "EMP-909", "name": "Maryam Noor" },
+      "role": "Operator",
+      "assigned-date": "2024-07-20",
+      "expected-date": "2024-07-30",
+      "status": "Delayed"
+    }
+  ]
+}

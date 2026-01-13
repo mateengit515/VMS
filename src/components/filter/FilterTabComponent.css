@@ -1,0 +1,137 @@
+.filter-tab-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent background */
+    z-index: 10; /* Ensure it's above other content */
+}
+
+.filter-tab-container {
+    width: 30%;
+    height: 90%;
+    bottom: 0;
+    background-color: white;
+    right: 0;
+    z-index: 3;
+    position: absolute;
+    animation: slideInFromRight 1s ease-in;
+    border-radius: 10px;
+    /* Animation duration and easing */
+}
+
+.heading {
+    font-weight: 500;
+    font-size: 20px;
+    margin: 10px 0px 0px 10px;
+    padding-bottom: 5px;
+    position: absolute;
+    left: 0;
+    font-family: math;
+}
+
+.sub-heading {
+    font-weight: 200;
+    font-size: 15px;
+    margin: 0px 0px 0px 18px;
+    padding-bottom: 5px;
+    display: flex;
+    left: 0;
+    color: #b6aeae;
+}
+
+.heading-separator {
+    background: #eae2e2;
+    margin: 42px 0px 40px 12px;
+    height: 1px;
+    width: 95%;
+}
+
+.filter-tab-container-animation-out {
+    width: 50%;
+    height: 80%;
+    bottom: 0;
+    background-color: white;
+    right: 0;
+    z-index: 3;
+    position: absolute;
+    animation: slideOutToRight 1s ease-out;
+    /* Animation duration and easing */
+}
+
+.cross-icon-img {
+    cursor: pointer;
+    position: inherit;
+    height: 18px;
+    width: 18px;
+    right: 0;
+    padding: 13px;
+
+}
+
+.filter-icon {
+    height: 18px;
+    width: 18px;
+    padding-right: 5px;
+}
+
+.no-filter-text {
+    font-weight: 200;
+    margin: 10px 0px 0px 12px;
+}
+
+.plus-icon {
+    height: 15px;
+    width: 15px;
+    padding-right: 10px;
+}
+
+.add-filters {
+    display: flex;
+    margin: 10px 0px 20px 12px;
+    width: 90%;
+    justify-content: center;
+    padding: 10px;
+    border-radius: 8px;
+    background: blue;
+    color: white;
+    border: blue;
+    cursor: pointer;
+}
+
+.filter-name{
+    font-weight: 200;
+    font-size: 15px;
+    margin: 5px 0px 3px 18px;
+    padding-bottom: 5px;
+    display: flex;
+    left: 0;}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        /* Start off-screen to the left */
+        opacity: 1;
+        /* Optional: Start invisible */
+    }
+
+    to {
+        transform: translateX(0);
+        /* End at original position */
+        opacity: 1;
+        /* Optional: Fully visible */
+    }
+}
+
+@keyframes slideOutToRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
