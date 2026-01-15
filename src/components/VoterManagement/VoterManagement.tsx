@@ -17,7 +17,7 @@ const VoterManagement: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/vi/voters", {
+      .get("http://vmspai-env.eba-mif9ab4r.us-east-1.elasticbeanstalk.com/api/vi/voters", {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
