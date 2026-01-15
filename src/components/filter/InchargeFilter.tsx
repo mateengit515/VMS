@@ -1,6 +1,6 @@
 // src/components/filter/inchargeFilter.tsx
 import React from "react";
-import "./InchargeFilter.css";
+import "./Inchargefilter.css";
 
 export type inchargeFilterProps = {
   /** Currently selected incharge (controlled) */
