@@ -7,19 +7,17 @@ type Props = {
   inchargeFilter?: string;
   voterList: { list: any[] };
   selectedColumns?: any[]; 
-  onStatusChange?: (epicNumber: string, newStatus: string) => void;
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
 };
 
 const INCHARGE_OPTIONS = ["NA","Mujju", "Salman", "Meraj", "Nouman"];
-const STATUS_OPTIONS = ["NA","Active", "Inactive", "Pending"];
+//const STATUS_OPTIONS = ["NA","Active", "Inactive", "Pending"];
 
 const VoterManagementTable: React.FC<Props> = ({
   query = "",
   filterQuery = { name: "", value: "" },
   inchargeFilter = "",
   voterList,
-  onStatusChange,
   onInchargeChange,
 }) => {
   const [filteredItems, setFilteredItems] = useState<{ list: any[] }>({ list: [] });
@@ -66,15 +64,15 @@ const VoterManagementTable: React.FC<Props> = ({
     onInchargeChange?.(epicNumber, newIncharge);
   };
 
-  const handleStatusChange = (epicNumber: string, newStatus: string) => {
-    setFilteredItems((prev) => ({
-      list: prev.list.map((item) =>
-        item["epic_no"] === epicNumber ? { ...item, status: newStatus } : item
-      ),
-    }));
+  // const handleStatusChange = (epicNumber: string, newStatus: string) => {
+  //   setFilteredItems((prev) => ({
+  //     list: prev.list.map((item) =>
+  //       item["epic_no"] === epicNumber ? { ...item, status: newStatus } : item
+  //     ),
+  //   }));
 
-    onStatusChange?.(epicNumber, newStatus);
-  };
+  //   onStatusChange?.(epicNumber, newStatus);
+  // };
 
   return (
     <div className="table-container">
