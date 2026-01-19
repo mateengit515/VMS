@@ -63,3 +63,13 @@
   color: #374151;
   vertical-align: middle;
 }
+
+.table-container{
+    display: grid;
+
+}
+table, td, th {
+  border: 1px solid lightgrey;
+  border-collapse: collapse;
+  border-radius: 5px;
+}

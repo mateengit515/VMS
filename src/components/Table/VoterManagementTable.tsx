@@ -33,18 +33,14 @@ const VoterManagementTable: React.FC<Props> = ({
 
     const filtered = voterList.list.filter((item: any) => {
       const allValues = [
-        item["S.No"],
-        item["WardNumber"],
-        item["PART_NO"],
-        item["SL_NO_IN_PART"],
-        item["NAME"],
-        item["EPIC_No"],
-        item["GENDER"],
-        item["AGE"],
-        item["MOBILE_NO"],
-        item["HOUSE_No"],
-        item["ADDRESS"],
-        item["INCHARGE"],
+        item["serial_no"],
+        item["name"],
+        item["epic_no"],
+        item["sex"],
+        item["age"],
+        item["door_no"],
+        item["incharge"],
+        item["contact_number"],
         
       ]
         .filter(Boolean)
@@ -52,7 +48,7 @@ const VoterManagementTable: React.FC<Props> = ({
 
       const matchesQuery = q === "" ? true : allValues.some((v) => v.includes(q));
       const matchesStatus = fVal === "" ? true : item.status.toLowerCase() === fVal;
-      const matchesIncharge= rVal === "" ? true : item.INCHARGE.toLowerCase() === rVal;
+      const matchesIncharge= rVal === "" ? true : item.incharge.toLowerCase() === rVal;
 
       return matchesQuery && matchesStatus && matchesIncharge;
     });
@@ -63,7 +59,7 @@ const VoterManagementTable: React.FC<Props> = ({
   const handleInchargeChange = (epicNumber: string, newIncharge: string) => {
     setFilteredItems((prev) => ({
       list: prev.list.map((item) =>
-        item["EPIC_No"] === epicNumber ? { ...item, INCHARGE: newIncharge } : item
+        item["epic_no"] === epicNumber ? { ...item, incharge: newIncharge } : item
       ),
     }));
 
@@ -73,7 +69,7 @@ const VoterManagementTable: React.FC<Props> = ({
   const handleStatusChange = (epicNumber: string, newStatus: string) => {
     setFilteredItems((prev) => ({
       list: prev.list.map((item) =>
-        item["EPIC_No"] === epicNumber ? { ...item, status: newStatus } : item
+        item["epic_no"] === epicNumber ? { ...item, status: newStatus } : item
       ),
     }));
 
@@ -85,40 +81,33 @@ const VoterManagementTable: React.FC<Props> = ({
       <table className="assignments-table">
         <thead>
           <tr>
-            <th>S.NO</th>
-            <th>WardNumber</th>
-            <th>PartNo</th>
-            <th>SL-PartNo</th>
+            <th>SLNo.</th>
             <th>Name</th>
-            <th>EpicNo</th>
-             <th>Incharge</th>
-            <th>HouseNo</th>
-            <th>Gender</th>
+            <th>EPIC No.</th>
+            <th>Sex</th>
             <th>Age</th>
-            <th>Status</th>
-            <th>MobileNo</th>
-           
-
+             <th>Door No.</th>
+             <th>Incharge</th>
+            <th>Contact Number</th>
           </tr>
         </thead>
         <tbody>
           {filteredItems.list.length > 0 ? (
             filteredItems.list.map((a, i) => (
               <tr key={i}>
-                <td>{a["S.No"]}</td>
-                <td>{a["WardNumber"]}</td>
-                <td>{a["PART_NO"]}</td>
-                <td>{a["SL_NO_IN_PART"]}</td>
-                <td>{a["NAME"]}</td>
-                <td>{a["EPIC_No"]}</td>
-               <td className="status-cell">
+                <td>{a["serial_no"]}</td>
+                <td>{a["name"]}</td>
+                <td>{a["epic_no"]}</td>
+                <td>{a["sex"]}</td>
+                <td>{a["age"]}</td>
+                <td>{a["door_no"]}</td>
+
+                <td className="status-cell">
                   <select
-                    className={`status-dropdown ${a.INCHARGE
-                      .toLowerCase()
-                      .replace(" ", "-")}`}
-                    value={a.INCHARGE}
+                    className="status-dropdown"
+                    value={a.incharge}
                     onChange={(e) =>
-                      handleInchargeChange(a["EPIC_No"], e.target.value)
+                      handleInchargeChange(a["epic_no"], e.target.value)
                     }
                   >
                     {INCHARGE_OPTIONS.map((s) => (
@@ -128,27 +117,7 @@ const VoterManagementTable: React.FC<Props> = ({
                     ))}
                   </select>
                 </td>
-                <td>{a["HOUSE_No"]}</td>
-                <td>{a["GENDER"]}</td>
-                <td>{a["AGE"]}</td>
-                 <td className="status-cell">
-                  <select
-                    className={`status-dropdown ${a.STATUS
-                      .toLowerCase()
-                      .replace(" ", "-")}`}
-                    value={a.status}
-                    onChange={(e) =>
-                      handleStatusChange(a["asset-number"], e.target.value)
-                    }
-                  >
-                    {STATUS_OPTIONS.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-                <td>{a["MOBILE_NO"]}</td>
+                <td>{a["contact_number"]}</td>
 
               </tr>
             ))
