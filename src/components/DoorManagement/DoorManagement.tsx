@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./VoterManagement.css";
+import "./DoorManagement.css";
 import SearchBar from "../searchBar/SearchBar";
 import FilterComponent from "../filter/FilterComponent";
 import InchargeFilter from "../filter/InchargeFilter";
-import VoterManagementTable from "../Table/VoterManagementTable";
+import DoorManagementTable from "../Table/DoorManagementTable";
 import { toCamelCase } from "../../helpers/utils";
 
 
-const VoterManagement: React.FC = () => {
-  const [voterList, setvoterList] = useState<any>({});
+const DoorManagement: React.FC = () => {
+  const [doorList, setdoorList] = useState<any>({});
   const [selectedColumns, setSelectedColumns] = useState<any[]>([]);
   const [query, setQuery] = useState("");
   const [inchargeFilter, setInchargeFilter] = useState("");
@@ -17,15 +17,15 @@ const VoterManagement: React.FC = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/vi/voters/door/3-4-217", {
+      .get("http://localhost:8080/api/vi/voters/door-summary", {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
       })
       .then((res) => {
-        console.log("✅ Loaded voter assignments:", res.data);
-        setvoterList(res.data);
+        console.log("✅ Loaded Door assignments:", res.data);
+        setdoorList(res.data);
 
         if (res.data.list && res.data.list.length > 0) {
           const cols = Object.keys(res.data.list[0]).map((key) => ({
@@ -34,7 +34,7 @@ const VoterManagement: React.FC = () => {
           setSelectedColumns(cols);
         }
       })
-      .catch((err) => console.error(" Error fetching assignments:", err));
+      .catch((err) => console.error(" Error fetching Door Details:", err));
   }, []);
 
   return (
@@ -55,11 +55,11 @@ const VoterManagement: React.FC = () => {
         <InchargeFilter incharge={inchargeFilter} setIncharge={setInchargeFilter} />
       </div>
 
-      <VoterManagementTable
+      <DoorManagementTable
         query={query}
         filterQuery={filterQuery}
         inchargeFilter={inchargeFilter}
-        voterList={voterList}
+        doorList={doorList}
         selectedColumns={selectedColumns}
         
       />
@@ -67,4 +67,4 @@ const VoterManagement: React.FC = () => {
   );
 };
 
-export default VoterManagement;
+export default DoorManagement;

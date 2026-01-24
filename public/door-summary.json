@@ -1,0 +1,46 @@
+{
+  "list": [
+    {
+      "serial_no": 2445,
+      "epic_no": "YOJ75193",
+      "house_seq": 1,
+      "house_total": 25,
+      "incharge": "",
+      "sex": "F",
+      "name": "Rahu Sharma",
+      "door_no": "3-4-217",
+      "available": "",
+      "room_no": "4",
+      "age": 27,
+      "contact_number": ""
+    },
+    {
+      "serial_no": 195,
+      "epic_no": "YOJ7878671",
+      "house_seq": 2,
+      "house_total": 25,
+      "incharge": "",
+      "sex": "M",
+      "name": "Anjali Sharma",
+      "door_no": "3-4-217",
+      "available": "",
+      "room_no": "1",
+      "age": 56,
+      "contact_number": ""
+    },
+    {
+      "serial_no": 2671,
+      "epic_no": "YOJ7521057",
+      "house_seq": 3,
+      "house_total": 25,
+      "incharge": "",
+      "sex": "F",
+      "name": "Kevin Paul",
+      "door_no": "3-4-217",
+      "available": "",
+      "room_no": "4",
+      "age": 32,
+      "contact_number": ""
+    }
+  ]
+}

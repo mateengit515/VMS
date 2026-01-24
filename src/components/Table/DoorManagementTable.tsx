@@ -5,7 +5,7 @@ type Props = {
   query?: string;
   filterQuery?: { name: string; value: string };
   inchargeFilter?: string;
-  voterList: { list: any[] };
+  doorList: { list: any[] };
   selectedColumns?: any[]; 
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
 };
@@ -13,32 +13,29 @@ type Props = {
 const INCHARGE_OPTIONS = ["NA","Mujju", "Salman", "Meraj", "Nouman"];
 //const STATUS_OPTIONS = ["NA","Active", "Inactive", "Pending"];
 
-const VoterManagementTable: React.FC<Props> = ({
+const DoorManagementTable: React.FC<Props> = ({
   query = "",
   filterQuery = { name: "", value: "" },
   inchargeFilter = "",
-  voterList,
+  doorList,
   onInchargeChange,
 }) => {
   const [filteredItems, setFilteredItems] = useState<{ list: any[] }>({ list: [] });
 
   useEffect(() => {
-    if (!voterList || !Array.isArray(voterList.list)) return;
+    console .log("Door List in Table:", doorList);
+    if (!doorList || !Array.isArray(doorList)) return;
 
     const q = query.toLowerCase();
     const fVal = filterQuery.value.toLowerCase();
     const rVal = inchargeFilter.toLowerCase();
 
-    const filtered = voterList.list.filter((item: any) => {
+    const filtered = doorList.filter((item: any) => {
       const allValues = [
-        item["serial_no"],
-        item["name"],
-        item["epic_no"],
-        item["sex"],
-        item["age"],
-        item["door_no"],
+      
+        item["doorNo"],
         item["incharge"],
-        item["contact_number"],
+        item["houseTotal"],
         
       ]
         .filter(Boolean)
@@ -52,12 +49,12 @@ const VoterManagementTable: React.FC<Props> = ({
     });
 
     setFilteredItems({ list: filtered });
-  }, [query, filterQuery, inchargeFilter, voterList]);
+  }, [query, filterQuery, inchargeFilter, doorList]);
 
-  const handleInchargeChange = async (epicNo: string, newIncharge: string) => {
+  const handleInchargeChange = async (doorNo: string, newIncharge: string) => {
     setFilteredItems((prev) => ({
       list: prev.list.map((item) =>
-        item["epic_no"] === epicNo ? { ...item, incharge: newIncharge } : item
+        item["doorNo"] === doorNo ? { ...item, incharge: newIncharge } : item
       ),
     }));
 
@@ -66,13 +63,13 @@ const VoterManagementTable: React.FC<Props> = ({
       await fetch("http://localhost:8080/api/vi/voters/update-incharge", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ epic_no: epicNo, incharge: newIncharge }),
+        body: JSON.stringify({ doorNo: doorNo, incharge: newIncharge }),
       });
     } catch (error) {
       console.error("Failed to update incharge:", error);
     }
 
-    onInchargeChange?.(epicNo, newIncharge);
+    onInchargeChange?.(doorNo, newIncharge);
   };
 
   // const handleStatusChange = (epicNumber: string, newStatus: string) => {
@@ -90,33 +87,24 @@ const VoterManagementTable: React.FC<Props> = ({
       <table className="assignments-table">
         <thead>
           <tr>
-            <th>SLNo.</th>
-            <th>Name</th>
-            <th>EPIC No.</th>
-            <th>Sex</th>
-            <th>Age</th>
+          
              <th>Door No.</th>
              <th>Incharge</th>
-            <th>Contact Number</th>
+            <th>House Total</th>
           </tr>
         </thead>
         <tbody>
           {filteredItems.list.length > 0 ? (
             filteredItems.list.map((a, i) => (
               <tr key={i}>
-                <td>{a["serial_no"]}</td>
-                <td>{a["name"]}</td>
-                <td>{a["epic_no"]}</td>
-                <td>{a["sex"]}</td>
-                <td>{a["age"]}</td>
-                <td>{a["door_no"]}</td>
+                <td>{a["doorNo"]}</td>
 
                 <td className="status-cell">
                   <select
                     className="status-dropdown"
                     value={a.incharge}
                     onChange={(e) =>
-                      handleInchargeChange(a["epic_no"], e.target.value)
+                      handleInchargeChange(a["doorNo"], e.target.value)
                     }
                   >
                     {INCHARGE_OPTIONS.map((s) => (
@@ -126,7 +114,7 @@ const VoterManagementTable: React.FC<Props> = ({
                     ))}
                   </select>
                 </td>
-                <td>{a["contact_number"]}</td>
+                <td>{a["houseTotal"]}</td>
 
               </tr>
             ))
@@ -143,4 +131,4 @@ const VoterManagementTable: React.FC<Props> = ({
   );
 };
 
-export default VoterManagementTable;
+export default DoorManagementTable;
