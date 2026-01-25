@@ -73,3 +73,15 @@ table, td, th {
   border-collapse: collapse;
   border-radius: 5px;
 }
+
+/* Door link styling */
+.door-link {
+  color: #1e40af;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.door-link:hover {
+  color: #3b82f6;
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./VoterManagement.css";
 import SearchBar from "../searchBar/SearchBar";
@@ -9,6 +10,7 @@ import { toCamelCase } from "../../helpers/utils";
 
 
 const VoterManagement: React.FC = () => {
+  const location = useLocation();
   const [voterList, setvoterList] = useState<any>({});
   const [selectedColumns, setSelectedColumns] = useState<any[]>([]);
   const [query, setQuery] = useState("");
@@ -16,8 +18,11 @@ const VoterManagement: React.FC = () => {
   const [filterQuery, setFilterQuery] = useState({ name: "", value: "" });
 
   useEffect(() => {
+    const pathDoorNumber = location.pathname.replace('/voter-details/', '');
+    const doorNo = pathDoorNumber || "3-4-217";
+    console.log("Door number:", doorNo);
     axios
-      .get("http://localhost:8080/api/vi/voters/door/3-4-217", {
+      .get(`http://localhost:8080/api/vi/voters/door/${doorNo}`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -35,7 +40,7 @@ const VoterManagement: React.FC = () => {
         }
       })
       .catch((err) => console.error(" Error fetching assignments:", err));
-  }, []);
+  }, [location.pathname]);
 
   return (
     <div className="asset-assignment-page">

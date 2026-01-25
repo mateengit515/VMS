@@ -7,6 +7,7 @@ const AppRoutes = [
   <Route path="/" element={<WardsList />} key="root" />,
    <Route path="/ward65" element={<VoterManagement/>} />,
    <Route path="/ward66" element={<DoorManagement/>} />,
+   <Route path="/voter-details/*" element={<VoterManagement/>} />,
 ];
 
 export default AppRoutes;

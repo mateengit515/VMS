@@ -8,10 +8,13 @@ type Props = {
   voterList: { list: any[] };
   selectedColumns?: any[]; 
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
+  onStatusChange?: (epicNumber: string, newStatus: string) => void;
+  onVotedChange?: (epicNumber: string, newVoted: string) => void;
 };
 
 const INCHARGE_OPTIONS = ["NA","Mujju", "Salman", "Meraj", "Nouman"];
-//const STATUS_OPTIONS = ["NA","Active", "Inactive", "Pending"];
+const STATUS_OPTIONS = ["NA", "Available"];
+const VOTED_OPTIONS = ["No", "Yes"];
 
 const VoterManagementTable: React.FC<Props> = ({
   query = "",
@@ -19,6 +22,8 @@ const VoterManagementTable: React.FC<Props> = ({
   inchargeFilter = "",
   voterList,
   onInchargeChange,
+  onStatusChange,
+  onVotedChange,
 }) => {
   const [filteredItems, setFilteredItems] = useState<{ list: any[] }>({ list: [] });
 
@@ -75,15 +80,47 @@ const VoterManagementTable: React.FC<Props> = ({
     onInchargeChange?.(epicNo, newIncharge);
   };
 
-  // const handleStatusChange = (epicNumber: string, newStatus: string) => {
-  //   setFilteredItems((prev) => ({
-  //     list: prev.list.map((item) =>
-  //       item["epic_no"] === epicNumber ? { ...item, status: newStatus } : item
-  //     ),
-  //   }));
+  const handleStatusChange = async (epicNo: string, newStatus: string) => {
+    setFilteredItems((prev) => ({
+      list: prev.list.map((item) =>
+        item["epic_no"] === epicNo ? { ...item, status: newStatus } : item
+      ),
+    }));
 
-  //   onStatusChange?.(epicNumber, newStatus);
-  // };
+    // API call to update status in DB
+    try {
+      await fetch("http://localhost:8080/api/vi/voters/update-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ epic_no: epicNo, status: newStatus }),
+      });
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+
+    onStatusChange?.(epicNo, newStatus);
+  };
+
+  const handleVotedChange = async (epicNo: string, newVoted: string) => {
+    setFilteredItems((prev) => ({
+      list: prev.list.map((item) =>
+        item["epic_no"] === epicNo ? { ...item, voted: newVoted } : item
+      ),
+    }));
+
+    // API call to update voted status in DB
+    try {
+      await fetch("http://localhost:8080/api/vi/voters/update-voted", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ epic_no: epicNo, voted: newVoted }),
+      });
+    } catch (error) {
+      console.error("Failed to update voted status:", error);
+    }
+
+    onVotedChange?.(epicNo, newVoted);
+  };
 
   return (
     <div className="table-container">
@@ -97,6 +134,8 @@ const VoterManagementTable: React.FC<Props> = ({
             <th>Age</th>
              <th>Door No.</th>
              <th>Incharge</th>
+            <th>Status</th>
+            <th>Voted</th>
             <th>Contact Number</th>
           </tr>
         </thead>
@@ -110,16 +149,31 @@ const VoterManagementTable: React.FC<Props> = ({
                 <td>{a["sex"]}</td>
                 <td>{a["age"]}</td>
                 <td>{a["door_no"]}</td>
-
+                <td>{a["incharge"]}</td>
                 <td className="status-cell">
                   <select
                     className="status-dropdown"
-                    value={a.incharge}
+                    value={a.status || "NA"}
                     onChange={(e) =>
-                      handleInchargeChange(a["epic_no"], e.target.value)
+                      handleStatusChange(a["epic_no"], e.target.value)
                     }
                   >
-                    {INCHARGE_OPTIONS.map((s) => (
+                    {STATUS_OPTIONS.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td className="status-cell">
+                  <select
+                    className="status-dropdown"
+                    value={a.voted || "No"}
+                    onChange={(e) =>
+                      handleVotedChange(a["epic_no"], e.target.value)
+                    }
+                  >
+                    {VOTED_OPTIONS.map((s) => (
                       <option key={s} value={s}>
                         {s}
                       </option>
@@ -132,7 +186,7 @@ const VoterManagementTable: React.FC<Props> = ({
             ))
           ) : (
             <tr>
-              <td colSpan={7} style={{ textAlign: "center" }}>
+              <td colSpan={10} style={{ textAlign: "center" }}>
                 No assignments found
               </td>
             </tr>

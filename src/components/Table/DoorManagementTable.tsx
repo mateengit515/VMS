@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./Table.css";
 
 type Props = {
@@ -97,7 +98,11 @@ const DoorManagementTable: React.FC<Props> = ({
           {filteredItems.list.length > 0 ? (
             filteredItems.list.map((a, i) => (
               <tr key={i}>
-                <td>{a["doorNo"]}</td>
+                <td>
+                  <Link to={`/voter-details/${a["doorNo"]}`} className="door-link">
+                    {a["doorNo"]}
+                  </Link>
+                </td>
 
                 <td className="status-cell">
                   <select
