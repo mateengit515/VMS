@@ -85,3 +85,28 @@ table, td, th {
 .door-link:hover {
   color: #3b82f6;
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .assignments-table {
+    font-size: 12px;
+    min-width: 600px;
+  }
+
+  .assignments-table th,
+  .assignments-table td {
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+
+  .status-dropdown {
+    width: 100px;
+    font-size: 0.8rem;
+    padding: 4px 6px;
+  }
+}

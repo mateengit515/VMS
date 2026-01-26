@@ -12,3 +12,20 @@
     border-radius: 5px;
     border: 1px solid lightgrey;
 }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .search-bar {
+    width: 100%;
+    padding: 10px 12px;
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .select-item {
+    width: 100%;
+    padding: 12px;
+    min-height: 44px;
+    font-size: 16px;
+  }
+}

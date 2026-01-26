@@ -92,3 +92,24 @@
   margin-bottom: 8px;
 }
 
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 16px;
+  }
+
+  .login-box {
+    padding: 32px 24px;
+    max-width: 100%;
+  }
+
+  .login-title {
+    font-size: 24px;
+  }
+
+  .login-subtitle {
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+}
+
