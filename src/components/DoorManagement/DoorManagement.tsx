@@ -6,9 +6,12 @@ import FilterComponent from "../filter/FilterComponent";
 import InchargeFilter from "../filter/InchargeFilter";
 import DoorManagementTable from "../Table/DoorManagementTable";
 import { toCamelCase } from "../../helpers/utils";
+import { useAuth } from "../../contexts/AuthContext";
+import { getAuthHeaders } from "../../helpers/authHelper";
 
 
 const DoorManagement: React.FC = () => {
+  const { userInfo, logout } = useAuth();
   const [doorList, setdoorList] = useState<any>({});
   const [selectedColumns, setSelectedColumns] = useState<any[]>([]);
   const [query, setQuery] = useState("");
@@ -16,14 +19,12 @@ const DoorManagement: React.FC = () => {
   const [filterQuery, setFilterQuery] = useState({ name: "", value: "" });
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/vi/voters/door-summary", {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      })
-      .then((res) => {
+    const fetchDoors = async () => {
+      try {
+        const headers = await getAuthHeaders();
+        const res = await axios.get("http://localhost:8080/api/vi/voters/door-summary", {
+          headers
+        });
         console.log("✅ Loaded Door assignments:", res.data);
         setdoorList(res.data);
 
@@ -33,8 +34,12 @@ const DoorManagement: React.FC = () => {
           }));
           setSelectedColumns(cols);
         }
-      })
-      .catch((err) => console.error(" Error fetching Door Details:", err));
+      } catch (err) {
+        console.error(" Error fetching Door Details:", err);
+      }
+    };
+    
+    fetchDoors();
   }, []);
 
   return (
@@ -44,7 +49,17 @@ const DoorManagement: React.FC = () => {
           <h2 className="asset-title">Voter Management System</h2>
           <p className="asset-subtitle">Manage Votes allocation</p>
         </div>
-        <button className="assign-btn">+ Assign Now</button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          {userInfo && (
+            <div style={{ textAlign: 'right' }}>
+              <p style={{ margin: 0, fontWeight: 600 }}>{userInfo.username}</p>
+              <p style={{ margin: 0, fontSize: '12px', color: '#718096' }}>
+                {userInfo.role === 'admin' ? 'Administrator' : 'Incharge'}
+              </p>
+            </div>
+          )}
+          <button className="assign-btn" onClick={logout}>Logout</button>
+        </div>
       </header>
 
       <hr className="header-divider" />

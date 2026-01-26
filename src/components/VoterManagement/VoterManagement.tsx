@@ -7,6 +7,7 @@ import FilterComponent from "../filter/FilterComponent";
 import InchargeFilter from "../filter/InchargeFilter";
 import VoterManagementTable from "../Table/VoterManagementTable";
 import { toCamelCase } from "../../helpers/utils";
+import { getAuthHeaders } from "../../helpers/authHelper";
 
 
 const VoterManagement: React.FC = () => {
@@ -18,17 +19,17 @@ const VoterManagement: React.FC = () => {
   const [filterQuery, setFilterQuery] = useState({ name: "", value: "" });
 
   useEffect(() => {
-    const pathDoorNumber = location.pathname.replace('/voter-details/', '');
-    const doorNo = pathDoorNumber || "3-4-217";
-    console.log("Door number:", doorNo);
-    axios
-      .get(`http://localhost:8080/api/vi/voters/door/${doorNo}`, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      })
-      .then((res) => {
+    const fetchVoters = async () => {
+      try {
+        const pathDoorNumber = location.pathname.replace('/voter-details/', '');
+        const doorNo = pathDoorNumber || "3-4-217";
+        console.log("Door number:", doorNo);
+        
+        const headers = await getAuthHeaders();
+        const res = await axios.get(`http://localhost:8080/api/vi/voters/door/${doorNo}`, {
+          headers
+        });
+        
         console.log("✅ Loaded voter assignments:", res.data);
         setvoterList(res.data);
 
@@ -38,8 +39,12 @@ const VoterManagement: React.FC = () => {
           }));
           setSelectedColumns(cols);
         }
-      })
-      .catch((err) => console.error(" Error fetching assignments:", err));
+      } catch (err) {
+        console.error(" Error fetching assignments:", err);
+      }
+    };
+    
+    fetchVoters();
   }, [location.pathname]);
 
   return (

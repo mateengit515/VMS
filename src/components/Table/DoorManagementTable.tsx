@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchAuthSession } from 'aws-amplify/auth';
 import "./Table.css";
 
 type Props = {
@@ -61,9 +62,15 @@ const DoorManagementTable: React.FC<Props> = ({
 
     // API call to update incharge in DB
     try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      
       await fetch("http://localhost:8080/api/vi/voters/update-incharge", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ doorNo: doorNo, incharge: newIncharge }),
       });
     } catch (error) {

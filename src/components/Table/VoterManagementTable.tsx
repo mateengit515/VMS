@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { fetchAuthSession } from 'aws-amplify/auth';
 import "./Table.css";
 
 type Props = {
@@ -12,7 +13,6 @@ type Props = {
   onVotedChange?: (epicNumber: string, newVoted: string) => void;
 };
 
-const INCHARGE_OPTIONS = ["NA","Mujju", "Salman", "Meraj", "Nouman"];
 const STATUS_OPTIONS = ["NA", "Available"];
 const VOTED_OPTIONS = ["No", "Yes"];
 
@@ -68,9 +68,15 @@ const VoterManagementTable: React.FC<Props> = ({
 
     // API call to update incharge in DB
     try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      
       await fetch("http://localhost:8080/api/vi/voters/update-incharge", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ epic_no: epicNo, incharge: newIncharge }),
       });
     } catch (error) {
@@ -89,9 +95,15 @@ const VoterManagementTable: React.FC<Props> = ({
 
     // API call to update status in DB
     try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      
       await fetch("http://localhost:8080/api/vi/voters/update-status", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ epic_no: epicNo, status: newStatus }),
       });
     } catch (error) {
@@ -110,9 +122,15 @@ const VoterManagementTable: React.FC<Props> = ({
 
     // API call to update voted status in DB
     try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      
       await fetch("http://localhost:8080/api/vi/voters/update-voted", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
         body: JSON.stringify({ epic_no: epicNo, voted: newVoted }),
       });
     } catch (error) {
