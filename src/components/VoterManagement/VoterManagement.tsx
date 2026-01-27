@@ -62,13 +62,11 @@ const VoterManagement: React.FC = () => {
       <div className="filters">
         <SearchBar query={query} setQuery={setQuery} />
         <FilterComponent setFilterQuery={setFilterQuery} />
-        <InchargeFilter incharge={inchargeFilter} setIncharge={setInchargeFilter} />
       </div>
 
       <VoterManagementTable
         query={query}
         filterQuery={filterQuery}
-        inchargeFilter={inchargeFilter}
         voterList={voterList}
         selectedColumns={selectedColumns}
         

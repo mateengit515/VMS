@@ -58,7 +58,6 @@ const VoterManagement: React.FC = () => {
       <VoterManagementTable
         query={query}
         filterQuery={filterQuery}
-        inchargeFilter={inchargeFilter}
         voterList={assignmentList}
         selectedColumns={selectedColumns}
       />
