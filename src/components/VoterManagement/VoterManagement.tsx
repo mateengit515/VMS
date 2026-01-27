@@ -19,7 +19,7 @@ const VoterManagement: React.FC = () => {
   useEffect(() => {
     const fetchVoters = async () => {
       try {
-        const pathDoorNumber = location.pathname.replace('/voter-details/', '');
+        const pathDoorNumber = location.pathname.replace('/voter-details/', '').replace(/\/$/, '');
         const doorNo = pathDoorNumber || "3-4-217";
         console.log("Door number:", doorNo);
         
