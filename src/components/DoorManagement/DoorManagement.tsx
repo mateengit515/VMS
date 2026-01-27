@@ -22,7 +22,7 @@ const DoorManagement: React.FC = () => {
     const fetchDoors = async () => {
       try {
         const headers = await getAuthHeaders();
-        const res = await axios.get("http://localhost:8080/api/vi/voters/door-summary", {
+        const res = await axios.get("https://api.mohsinbhai.com/api/vi/voters/door-summary", {
           headers
         });
         console.log("✅ Loaded Door assignments:", res.data);

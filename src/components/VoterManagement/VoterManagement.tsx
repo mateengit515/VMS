@@ -24,7 +24,7 @@ const VoterManagement: React.FC = () => {
         console.log("Door number:", doorNo);
         
         const headers = await getAuthHeaders();
-        const res = await axios.get(`http://localhost:8080/api/vi/voters/door/${doorNo}`, {
+        const res = await axios.get(`https://api.mohsinbhai.com/api/vi/voters/door/${doorNo}`, {
           headers
         });
         
