@@ -80,16 +80,6 @@ const DoorManagementTable: React.FC<Props> = ({
     onInchargeChange?.(doorNo, newIncharge);
   };
 
-  // const handleStatusChange = (epicNumber: string, newStatus: string) => {
-  //   setFilteredItems((prev) => ({
-  //     list: prev.list.map((item) =>
-  //       item["epic_no"] === epicNumber ? { ...item, status: newStatus } : item
-  //     ),
-  //   }));
-
-  //   onStatusChange?.(epicNumber, newStatus);
-  // };
-
   return (
     <div className="table-container">
       <table className="assignments-table">

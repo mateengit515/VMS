@@ -22,7 +22,7 @@ const inchargeFilter: React.FC<inchargeFilterProps> = ({ incharge, setIncharge, 
         onChange={(e) => setIncharge(e.target.value)}
       >
         {/* 👇 This acts as placeholder text inside the box */}
-        <option value="" disabled selected={!incharge}>
+        <option value="" disabled>
           All Incharges
         </option>
 

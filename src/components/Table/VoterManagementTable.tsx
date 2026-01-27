@@ -5,7 +5,6 @@ import "./Table.css";
 type Props = {
   query?: string;
   filterQuery?: { name: string; value: string };
-  inchargeFilter?: string;
   voterList: { list: any[] };
   selectedColumns?: any[]; 
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
@@ -19,9 +18,7 @@ const VOTED_OPTIONS = ["No", "Yes"];
 const VoterManagementTable: React.FC<Props> = ({
   query = "",
   filterQuery = { name: "", value: "" },
-  inchargeFilter = "",
   voterList,
-  onInchargeChange,
   onStatusChange,
   onVotedChange,
 }) => {
@@ -32,7 +29,6 @@ const VoterManagementTable: React.FC<Props> = ({
 
     const q = query.toLowerCase();
     const fVal = filterQuery.value.toLowerCase();
-    const rVal = inchargeFilter.toLowerCase();
 
     const filtered = voterList.list.filter((item: any) => {
       const allValues = [
@@ -51,41 +47,16 @@ const VoterManagementTable: React.FC<Props> = ({
 
       const matchesQuery = q === "" ? true : allValues.some((v) => v.includes(q));
       const matchesStatus = fVal === "" ? true : item.status.toLowerCase() === fVal;
-      const matchesIncharge= rVal === "" ? true : item.incharge.toLowerCase() === rVal;
 
-      return matchesQuery && matchesStatus && matchesIncharge;
+      return matchesQuery && matchesStatus ;
     });
 
     setFilteredItems({ list: filtered });
-  }, [query, filterQuery, inchargeFilter, voterList]);
+  }, [query, filterQuery, voterList]);
 
-  const handleInchargeChange = async (epicNo: string, newIncharge: string) => {
-    setFilteredItems((prev) => ({
-      list: prev.list.map((item) =>
-        item["epic_no"] === epicNo ? { ...item, incharge: newIncharge } : item
-      ),
-    }));
 
     // API call to update incharge in DB
-    try {
-      const session = await fetchAuthSession();
-      const token = session.tokens?.idToken?.toString();
-      
-      await fetch("http://localhost:8080/api/vi/voters/update-incharge", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ epic_no: epicNo, incharge: newIncharge }),
-      });
-    } catch (error) {
-      console.error("Failed to update incharge:", error);
-    }
-
-    onInchargeChange?.(epicNo, newIncharge);
-  };
-
+    
   const handleStatusChange = async (epicNo: string, newStatus: string) => {
     setFilteredItems((prev) => ({
       list: prev.list.map((item) =>
