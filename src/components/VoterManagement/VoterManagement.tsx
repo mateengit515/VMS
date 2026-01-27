@@ -4,7 +4,6 @@ import axios from "axios";
 import "./VoterManagement.css";
 import SearchBar from "../searchBar/SearchBar";
 import FilterComponent from "../filter/FilterComponent";
-import InchargeFilter from "../filter/InchargeFilter";
 import VoterManagementTable from "../Table/VoterManagementTable";
 import { toCamelCase } from "../../helpers/utils";
 import { getAuthHeaders } from "../../helpers/authHelper";
@@ -15,7 +14,6 @@ const VoterManagement: React.FC = () => {
   const [voterList, setvoterList] = useState<any>({});
   const [selectedColumns, setSelectedColumns] = useState<any[]>([]);
   const [query, setQuery] = useState("");
-  const [inchargeFilter, setInchargeFilter] = useState("");
   const [filterQuery, setFilterQuery] = useState({ name: "", value: "" });
 
   useEffect(() => {
