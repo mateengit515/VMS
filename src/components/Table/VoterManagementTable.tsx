@@ -9,20 +9,18 @@ type Props = {
   selectedColumns?: any[]; 
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
   onStatusChange?: (epicNumber: string, newStatus: string) => void;
-  onVotedChange?: (epicNumber: string, newVoted: string) => void;
 };
 
 const STATUS_OPTIONS = ["NA", "Available"];
-const VOTED_OPTIONS = ["No", "Yes"];
 
 const VoterManagementTable: React.FC<Props> = ({
   query = "",
   filterQuery = { name: "", value: "" },
   voterList,
   onStatusChange,
-  onVotedChange,
 }) => {
   const [filteredItems, setFilteredItems] = useState<{ list: any[] }>({ list: [] });
+  const [editingContact, setEditingContact] = useState<{[key: string]: string}>({});
 
   useEffect(() => {
     if (!voterList || !Array.isArray(voterList.list)) return;
@@ -84,31 +82,54 @@ const VoterManagementTable: React.FC<Props> = ({
     onStatusChange?.(epicNo, newStatus);
   };
 
-  const handleVotedChange = async (epicNo: string, newVoted: string) => {
+  const handleContactChange = (epicNo: string, value: string) => {
+    // Only allow numeric input, max 10 digits
+    const numericValue = value.replace(/\D/g, '').slice(0, 10);
+    setEditingContact(prev => ({ ...prev, [epicNo]: numericValue }));
+  };
+
+  const handleContactBlur = async (epicNo: string, contactNumber: string) => {
+    // If empty or unchanged, just clear editing state
+    if (!contactNumber || contactNumber === voterList.list.find(item => item["epic_no"] === epicNo)?.["contact_number"]) {
+      delete editingContact[epicNo];
+      setEditingContact({ ...editingContact });
+      return;
+    }
+
+    // Validate 10 digits
+    if (contactNumber.length !== 10) {
+      alert("Contact number must be exactly 10 digits");
+      return;
+    }
+
+    // Update local state
     setFilteredItems((prev) => ({
       list: prev.list.map((item) =>
-        item["epic_no"] === epicNo ? { ...item, voted: newVoted } : item
+        item["epic_no"] === epicNo ? { ...item, contact_number: contactNumber } : item
       ),
     }));
 
-    // API call to update voted status in DB
+    // API call to update contact number in DB
     try {
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
-      await fetch("https://api.mohsinbhai.com/api/vi/voters/update-voted", {
+      await fetch("https://api.mohsinbhai.com/api/vi/voters/update-contact", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify({ epic_no: epicNo, voted: newVoted }),
+        body: JSON.stringify({ epic_no: epicNo, contact_number: contactNumber }),
       });
+      console.log("✅ Contact number updated successfully");
     } catch (error) {
-      console.error("Failed to update voted status:", error);
+      console.error("Failed to update contact number:", error);
     }
 
-    onVotedChange?.(epicNo, newVoted);
+    // Clear editing state after successful update
+    delete editingContact[epicNo];
+    setEditingContact({ ...editingContact });
   };
 
   return (
@@ -124,7 +145,6 @@ const VoterManagementTable: React.FC<Props> = ({
              <th>Door No.</th>
              <th>Incharge</th>
             <th>Status</th>
-            <th>Voted</th>
             <th>Contact Number</th>
           </tr>
         </thead>
@@ -154,28 +174,27 @@ const VoterManagementTable: React.FC<Props> = ({
                     ))}
                   </select>
                 </td>
-                <td className="status-cell">
-                  <select
-                    className="status-dropdown"
-                    value={a.voted || "No"}
-                    onChange={(e) =>
-                      handleVotedChange(a["epic_no"], e.target.value)
-                    }
-                  >
-                    {VOTED_OPTIONS.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
+                <td>
+                  <input
+                    type="text"
+                    className="contact-input"
+                    value={editingContact[a["epic_no"]] !== undefined ? editingContact[a["epic_no"]] : a["contact_number"] || ""}
+                    onChange={(e) => handleContactChange(a["epic_no"], e.target.value)}
+                    onBlur={(e) => {
+                      if (editingContact[a["epic_no"]] !== undefined && editingContact[a["epic_no"]] !== a["contact_number"]) {
+                        handleContactBlur(a["epic_no"], e.target.value);
+                      }
+                    }}
+                    placeholder="Enter 10 digits"
+                    maxLength={10}
+                  />
                 </td>
-                <td>{a["contact_number"]}</td>
 
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={10} style={{ textAlign: "center" }}>
+              <td colSpan={9} style={{ textAlign: "center" }}>
                 No assignments found
               </td>
             </tr>

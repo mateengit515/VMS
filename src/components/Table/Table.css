@@ -32,6 +32,29 @@
 .status-dropdown:hover {
   opacity: 0.9;
 }
+
+/* Contact input field */
+.contact-input {
+  width: 120px;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.contact-input:focus {
+  border-color: #1e40af;
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+}
+
+.contact-input::placeholder {
+  color: #999;
+  font-size: 0.85rem;
+}
+
 /* Table */
 .assignments-table-wrap {
   width: 100%;
