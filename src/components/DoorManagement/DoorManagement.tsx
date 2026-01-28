@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./DoorManagement.css";
 import SearchBar from "../searchBar/SearchBar";
@@ -46,8 +47,10 @@ const DoorManagement: React.FC = () => {
     <div className="asset-assignment-page">
       <header className="asset-header">
         <div>
-          <h2 className="asset-title">Voter Management System</h2>
-          <p className="asset-subtitle">Manage Votes allocation</p>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <h2 className="asset-title">Voter Management System</h2>
+          </Link>
+          <p className="asset-subtitle">Manage Votes Allocation</p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           {userInfo && (

@@ -5,6 +5,7 @@ import "./Table.css";
 type Props = {
   query?: string;
   filterQuery?: { name: string; value: string };
+  statusFilter?: string;
   voterList: { list: any[] };
   selectedColumns?: any[]; 
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
@@ -16,6 +17,7 @@ const STATUS_OPTIONS = ["NA", "Available"];
 const VoterManagementTable: React.FC<Props> = ({
   query = "",
   filterQuery = { name: "", value: "" },
+  statusFilter = "",
   voterList,
   onStatusChange,
 }) => {
@@ -26,7 +28,7 @@ const VoterManagementTable: React.FC<Props> = ({
     if (!voterList || !Array.isArray(voterList.list)) return;
 
     const q = query.toLowerCase();
-    const fVal = filterQuery.value.toLowerCase();
+    const sVal = statusFilter.toLowerCase();
 
     const filtered = voterList.list.filter((item: any) => {
       const allValues = [
@@ -44,13 +46,13 @@ const VoterManagementTable: React.FC<Props> = ({
         .map((v) => v.toString().toLowerCase());
 
       const matchesQuery = q === "" ? true : allValues.some((v) => v.includes(q));
-      const matchesStatus = fVal === "" ? true : item.status.toLowerCase() === fVal;
+      const matchesStatusFilter = sVal === "" ? true : (item.status || "na").toLowerCase() === sVal;
 
-      return matchesQuery && matchesStatus ;
+      return matchesQuery && matchesStatusFilter;
     });
 
     setFilteredItems({ list: filtered });
-  }, [query, filterQuery, voterList]);
+  }, [query, filterQuery, statusFilter, voterList]);
 
 
     // API call to update incharge in DB
@@ -139,13 +141,13 @@ const VoterManagementTable: React.FC<Props> = ({
           <tr>
             <th>SLNo.</th>
             <th>Name</th>
+            <th>Status</th>
+            <th>Contact Number</th>
             <th>EPIC No.</th>
             <th>Sex</th>
             <th>Age</th>
              <th>Door No.</th>
              <th>Incharge</th>
-            <th>Status</th>
-            <th>Contact Number</th>
           </tr>
         </thead>
         <tbody>
@@ -154,11 +156,6 @@ const VoterManagementTable: React.FC<Props> = ({
               <tr key={i}>
                 <td>{a["serial_no"]}</td>
                 <td>{a["name"]}</td>
-                <td>{a["epic_no"]}</td>
-                <td>{a["sex"]}</td>
-                <td>{a["age"]}</td>
-                <td>{a["door_no"]}</td>
-                <td>{a["incharge"]}</td>
                 <td className="status-cell">
                   <select
                     className="status-dropdown"
@@ -189,6 +186,11 @@ const VoterManagementTable: React.FC<Props> = ({
                     maxLength={10}
                   />
                 </td>
+                <td>{a["epic_no"]}</td>
+                <td>{a["sex"]}</td>
+                <td>{a["age"]}</td>
+                <td>{a["door_no"]}</td>
+                <td>{a["incharge"]}</td>
 
               </tr>
             ))

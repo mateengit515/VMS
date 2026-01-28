@@ -127,6 +127,15 @@ table, td, th {
     white-space: nowrap;
   }
 
+  /* Reduce door number column width on mobile */
+  .assignments-table td:first-child,
+  .assignments-table th:first-child {
+    max-width: 80px;
+    min-width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .status-dropdown {
     width: 100px;
     font-size: 0.8rem;
