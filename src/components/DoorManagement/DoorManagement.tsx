@@ -20,27 +20,38 @@ const DoorManagement: React.FC = () => {
   const [filterQuery, setFilterQuery] = useState({ name: "", value: "" });
 
   useEffect(() => {
+    let isMounted = true;
+    
     const fetchDoors = async () => {
       try {
         const headers = await getAuthHeaders();
-        const res = await axios.get("https://api.mohsinbhai.com/api/vi/voters/door-summary", {
+        const res = await axios.get("http://localhost:8080/api/vi/doors", {
           headers
         });
-        console.log("✅ Loaded Door assignments:", res.data);
-        setdoorList(res.data);
+        
+        if (isMounted) {
+          console.log("✅ Loaded Door assignments:", res.data);
+          setdoorList(res.data);
 
-        if (res.data.list && res.data.list.length > 0) {
-          const cols = Object.keys(res.data.list[0]).map((key) => ({
-            name: toCamelCase(key), 
-          }));
-          setSelectedColumns(cols);
+          if (res.data.list && res.data.list.length > 0) {
+            const cols = Object.keys(res.data.list[0]).map((key) => ({
+              name: toCamelCase(key), 
+            }));
+            setSelectedColumns(cols);
+          }
         }
       } catch (err) {
-        console.error(" Error fetching Door Details:", err);
+        if (isMounted) {
+          console.error(" Error fetching Door Details:", err);
+        }
       }
     };
     
     fetchDoors();
+    
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (

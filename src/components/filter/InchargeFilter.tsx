@@ -11,7 +11,7 @@ export type inchargeFilterProps = {
   incharges?: string[];
 };
 
-const defaultincharges = ["Mujju", "Salman", "Meraj", "Nouman"];
+const defaultincharges = ["Mujju", "Salman", "Meraj", "Nouman", "Omair"];
 
 const inchargeFilter: React.FC<inchargeFilterProps> = ({ incharge, setIncharge, incharges = defaultincharges }) => {
   return (

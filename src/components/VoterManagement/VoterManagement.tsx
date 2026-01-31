@@ -28,7 +28,7 @@ const VoterManagement: React.FC = () => {
         console.log("Door number:", doorNo);
         
         const headers = await getAuthHeaders();
-        const res = await axios.get(`https://api.mohsinbhai.com/api/vi/voters/door/${doorNo}`, {
+        const res = await axios.get(`http://localhost:8080/api/vi/voters/door/${doorNo}`, {
           headers
         });
         
@@ -72,6 +72,26 @@ const VoterManagement: React.FC = () => {
       </header>
 
       <hr className="header-divider" />
+
+      <div style={{ marginBottom: '16px' }}>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          <button style={{ 
+            padding: '8px 16px', 
+            backgroundColor: '#f3f4f6', 
+            border: '1px solid #d1d5db',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: 700,
+            color: '#000000',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px'
+          }}>
+            ← Back to Door Management
+          </button>
+        </Link>
+      </div>
 
       <div className="filters">
         <SearchBar query={query} setQuery={setQuery} />

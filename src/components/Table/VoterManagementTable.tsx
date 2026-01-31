@@ -12,8 +12,6 @@ type Props = {
   onStatusChange?: (epicNumber: string, newStatus: string) => void;
 };
 
-const STATUS_OPTIONS = ["NA", "Available"];
-
 const VoterManagementTable: React.FC<Props> = ({
   query = "",
   filterQuery = { name: "", value: "" },
@@ -54,36 +52,6 @@ const VoterManagementTable: React.FC<Props> = ({
     setFilteredItems({ list: filtered });
   }, [query, filterQuery, statusFilter, voterList]);
 
-
-    // API call to update incharge in DB
-    
-  const handleStatusChange = async (epicNo: string, newStatus: string) => {
-    setFilteredItems((prev) => ({
-      list: prev.list.map((item) =>
-        item["epic_no"] === epicNo ? { ...item, status: newStatus } : item
-      ),
-    }));
-
-    // API call to update status in DB
-    try {
-      const session = await fetchAuthSession();
-      const token = session.tokens?.idToken?.toString();
-      
-      await fetch("https://api.mohsinbhai.com/api/vi/voters/update-status", {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({ epic_no: epicNo, status: newStatus }),
-      });
-    } catch (error) {
-      console.error("Failed to update status:", error);
-    }
-
-    onStatusChange?.(epicNo, newStatus);
-  };
-
   const handleContactChange = (epicNo: string, value: string) => {
     // Only allow numeric input, max 10 digits
     const numericValue = value.replace(/\D/g, '').slice(0, 10);
@@ -116,7 +84,7 @@ const VoterManagementTable: React.FC<Props> = ({
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
-      await fetch("https://api.mohsinbhai.com/api/vi/voters/update-contact", {
+      await fetch("http://localhost:8080/api/vi/voters/update-contact", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -141,7 +109,6 @@ const VoterManagementTable: React.FC<Props> = ({
           <tr>
             <th>SLNo.</th>
             <th>Name</th>
-            <th>Status</th>
             <th>Contact Number</th>
             <th>EPIC No.</th>
             <th>Sex</th>
@@ -156,21 +123,6 @@ const VoterManagementTable: React.FC<Props> = ({
               <tr key={i}>
                 <td>{a["serial_no"]}</td>
                 <td>{a["name"]}</td>
-                <td className="status-cell">
-                  <select
-                    className="status-dropdown"
-                    value={a.status || "NA"}
-                    onChange={(e) =>
-                      handleStatusChange(a["epic_no"], e.target.value)
-                    }
-                  >
-                    {STATUS_OPTIONS.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
-                </td>
                 <td>
                   <input
                     type="text"
@@ -191,12 +143,11 @@ const VoterManagementTable: React.FC<Props> = ({
                 <td>{a["age"]}</td>
                 <td>{a["door_no"]}</td>
                 <td>{a["incharge"]}</td>
-
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={9} style={{ textAlign: "center" }}>
+              <td colSpan={8} style={{ textAlign: "center" }}>
                 No assignments found
               </td>
             </tr>

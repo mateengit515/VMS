@@ -12,8 +12,13 @@ type Props = {
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
 };
 
-const INCHARGE_OPTIONS = ["NA","Mujju", "Salman", "Meraj", "Nouman"];
-//const STATUS_OPTIONS = ["NA","Active", "Inactive", "Pending"];
+const INCHARGE_OPTIONS = ["NA","Mujju", "Salman", "Meraj", "Nouman", "Omair"];
+const STATUS_OPTIONS = [
+  { value: "green", label: "Green", color: "#10b981" },
+  { value: "orange", label: "Orange", color: "#f97316" },
+  { value: "red", label: "Red", color: "#ef4444" }
+];
+const VISITED_OPTIONS = ["Yes", "No"];
 
 const DoorManagementTable: React.FC<Props> = ({
   query = "",
@@ -65,7 +70,7 @@ const DoorManagementTable: React.FC<Props> = ({
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
-      await fetch("https://api.mohsinbhai.com/api/vi/voters/update-incharge", {
+      await fetch("http://localhost:8080/api/vi/voters/update-incharge", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -80,6 +85,80 @@ const DoorManagementTable: React.FC<Props> = ({
     onInchargeChange?.(doorNo, newIncharge);
   };
 
+  const handleStatusChange = async (doorNo: string, newStatus: string) => {
+    setFilteredItems((prev) => ({
+      list: prev.list.map((item) =>
+        item["doorNo"] === doorNo ? { ...item, status: newStatus } : item
+      ),
+    }));
+
+    try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      
+      await fetch("http://localhost:8080/api/vi/doors/update-status", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ doorNo: doorNo, status: newStatus }),
+      });
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+  };
+
+  const handleVisitedChange = async (doorNo: string, newVisited: string) => {
+    setFilteredItems((prev) => ({
+      list: prev.list.map((item) =>
+        item["doorNo"] === doorNo ? { ...item, visited: newVisited } : item
+      ),
+    }));
+
+    try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      
+      await fetch("http://localhost:8080/api/vi/doors/update-visited", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ doorNo: doorNo, visited: newVisited }),
+      });
+    } catch (error) {
+      console.error("Failed to update visited:", error);
+    }
+  };
+
+  const handleCommentsBlur = async (doorNo: string, comments: string) => {
+    try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      
+      await fetch("http://localhost:8080/api/vi/doors/update-comments", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ doorNo: doorNo, comments: comments }),
+      });
+    } catch (error) {
+      console.error("Failed to update comments:", error);
+    }
+  };
+
+  const handleCommentsChange = (doorNo: string, newComments: string) => {
+    setFilteredItems((prev) => ({
+      list: prev.list.map((item) =>
+        item["doorNo"] === doorNo ? { ...item, comments: newComments } : item
+      ),
+    }));
+  };
+
   return (
     <div className="table-container">
       <table className="assignments-table">
@@ -89,6 +168,9 @@ const DoorManagementTable: React.FC<Props> = ({
              <th>Door No.</th>
              <th>Incharge</th>
             <th>House Total</th>
+            <th>Status</th>
+            <th>Visited</th>
+            <th>Comments</th>
           </tr>
         </thead>
         <tbody>
@@ -117,12 +199,57 @@ const DoorManagementTable: React.FC<Props> = ({
                   </select>
                 </td>
                 <td>{a["houseTotal"]}</td>
+                <td className="status-cell">
+                  <select
+                    className="color-status-dropdown"
+                    value={a.status || "green"}
+                    onChange={(e) =>
+                      handleStatusChange(a["doorNo"], e.target.value)
+                    }
+                    style={{
+                      backgroundColor: STATUS_OPTIONS.find(opt => opt.value === (a.status || "green"))?.color,
+                      color: "#fff",
+                      fontWeight: 600
+                    }}
+                  >
+                    {STATUS_OPTIONS.map((s) => (
+                      <option key={s.value} value={s.value}>
+                        {s.label}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td className="status-cell">
+                  <select
+                    className="status-dropdown"
+                    value={a.visited || "No"}
+                    onChange={(e) =>
+                      handleVisitedChange(a["doorNo"], e.target.value)
+                    }
+                  >
+                    {VISITED_OPTIONS.map((v) => (
+                      <option key={v} value={v}>
+                        {v}
+                      </option>
+                    ))}
+                  </select>
+                </td>
+                <td>
+                  <textarea
+                    className="comments-textarea"
+                    value={a.comments || ""}
+                    onChange={(e) => handleCommentsChange(a["doorNo"], e.target.value)}
+                    onBlur={(e) => handleCommentsBlur(a["doorNo"], e.target.value)}
+                    placeholder="Add comments..."
+                    rows={2}
+                  />
+                </td>
 
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={7} style={{ textAlign: "center" }}>
+              <td colSpan={6} style={{ textAlign: "center" }}>
                 No assignments found
               </td>
             </tr>
