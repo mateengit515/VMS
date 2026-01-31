@@ -84,10 +84,14 @@ const DoorManagement: React.FC = () => {
 
       <div className="filters">
         <SearchBar query={query} setQuery={setQuery} />
-        <FilterComponent setFilterQuery={setFilterQuery} />
-        <InchargeFilter incharge={inchargeFilter} setIncharge={setInchargeFilter} />
-        <StatusFilter status={statusFilter} setStatus={setStatusFilter} />
-        <VisitedFilter visited={visitedFilter} setVisited={setVisitedFilter} />
+        {userInfo?.role === 'admin' && (
+          <>
+            <FilterComponent setFilterQuery={setFilterQuery} />
+            <InchargeFilter incharge={inchargeFilter} setIncharge={setInchargeFilter} />
+            <StatusFilter status={statusFilter} setStatus={setStatusFilter} />
+            <VisitedFilter visited={visitedFilter} setVisited={setVisitedFilter} />
+          </>
+        )}
       </div>
 
       <DoorManagementTable

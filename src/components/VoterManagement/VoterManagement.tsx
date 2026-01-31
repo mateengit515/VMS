@@ -4,7 +4,7 @@ import axios from "axios";
 import "./VoterManagement.css";
 import SearchBar from "../searchBar/SearchBar";
 import FilterComponent from "../filter/FilterComponent";
-import StatusFilter from "../filter/StatusFilter";
+import VoterStatusFilter from "../filter/VoterStatusFilter";
 import VoterManagementTable from "../Table/VoterManagementTable";
 import { toCamelCase } from "../../helpers/utils";
 import { useAuth } from "../../contexts/AuthContext";
@@ -96,7 +96,7 @@ const VoterManagement: React.FC = () => {
       <div className="filters">
         <SearchBar query={query} setQuery={setQuery} />
         <FilterComponent setFilterQuery={setFilterQuery} />
-        <StatusFilter status={statusFilter} setStatus={setStatusFilter} />
+        <VoterStatusFilter status={statusFilter} setStatus={setStatusFilter} />
       </div>
 
       <VoterManagementTable
