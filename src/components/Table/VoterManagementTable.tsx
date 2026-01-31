@@ -68,7 +68,7 @@ const VoterManagementTable: React.FC<Props> = ({
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
-      await fetch("http://localhost:8080/api/vi/voters/update-status", {
+      await fetch("https://api.mohsinbhai.com/api/vi/voters/update-status", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -116,7 +116,7 @@ const VoterManagementTable: React.FC<Props> = ({
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
-      await fetch("http://localhost:8080/api/vi/voters/update-contact", {
+      await fetch("https://api.mohsinbhai.com/api/vi/voters/update-contact", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",

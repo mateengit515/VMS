@@ -29,7 +29,7 @@ const DoorManagement: React.FC = () => {
     const fetchDoors = async () => {
       try {
         const headers = await getAuthHeaders();
-        const res = await axios.get("http://localhost:8080/api/vi/doors", {
+        const res = await axios.get("https://api.mohsinbhai.com/api/vi/doors", {
           headers
         });
         

@@ -78,7 +78,7 @@ const DoorManagementTable: React.FC<Props> = ({
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
-      await fetch("http://localhost:8080/api/vi/voters/update-incharge", {
+      await fetch("https://api.mohsinbhai.com/api/vi/voters/update-incharge", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -104,7 +104,7 @@ const DoorManagementTable: React.FC<Props> = ({
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
-      await fetch("http://localhost:8080/api/vi/doors/update-status", {
+      await fetch("https://api.mohsinbhai.com/api/vi/doors/update-status", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -128,7 +128,7 @@ const DoorManagementTable: React.FC<Props> = ({
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
-      await fetch("http://localhost:8080/api/vi/doors/update-visited", {
+      await fetch("https://api.mohsinbhai.com/api/vi/doors/update-visited", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -146,7 +146,7 @@ const DoorManagementTable: React.FC<Props> = ({
       const session = await fetchAuthSession();
       const token = session.tokens?.idToken?.toString();
       
-      await fetch("http://localhost:8080/api/vi/doors/update-comments", {
+      await fetch("https://api.mohsinbhai.com/api/vi/doors/update-comments", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
