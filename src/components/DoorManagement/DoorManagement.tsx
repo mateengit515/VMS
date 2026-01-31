@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import MohsinLogo from "../../images/Mohsin.png";
 import "./DoorManagement.css";
 import SearchBar from "../searchBar/SearchBar";
 import FilterComponent from "../filter/FilterComponent";
@@ -62,7 +63,8 @@ const DoorManagement: React.FC = () => {
     <div className="asset-assignment-page">
       <header className="asset-header">
         <div>
-          <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <img src={MohsinLogo} alt="Team Mohsin Bhai" style={{ width: '48px', height: '48px', objectFit: 'contain' }} />
             <h2 className="asset-title">Team Mohsin Bhai!</h2>
           </Link>
           <p className="asset-subtitle">Manage Votes Allocation</p>

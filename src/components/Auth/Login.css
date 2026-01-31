@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   padding: 20px;
 }
 
@@ -28,6 +28,14 @@
   }
 }
 
+.login-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin: 0 auto 24px;
+  display: block;
+}
+
 .login-title {
   font-size: 32px;
   font-weight: 800;
@@ -47,10 +55,10 @@
 
 /* Customize Amplify Authenticator */
 .login-box [data-amplify-authenticator] {
-  --amplify-colors-brand-primary-10: #667eea;
-  --amplify-colors-brand-primary-80: #667eea;
-  --amplify-colors-brand-primary-90: #764ba2;
-  --amplify-colors-brand-primary-100: #764ba2;
+  --amplify-colors-brand-primary-10: #10b981;
+  --amplify-colors-brand-primary-80: #10b981;
+  --amplify-colors-brand-primary-90: #059669;
+  --amplify-colors-brand-primary-100: #059669;
 }
 
 .login-box [data-amplify-authenticator] [data-amplify-router] {
@@ -59,7 +67,7 @@
 }
 
 .login-box button[type="submit"] {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   border: none;
   border-radius: 8px;
   padding: 12px 24px;
@@ -69,7 +77,7 @@
 
 .login-box button[type="submit"]:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 .login-box input {
@@ -81,9 +89,9 @@
 }
 
 .login-box input:focus {
-  border-color: #667eea;
+  border-color: #10b981;
   outline: none;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
 }
 
 .login-box label {
