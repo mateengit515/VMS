@@ -7,6 +7,8 @@ type Props = {
   query?: string;
   filterQuery?: { name: string; value: string };
   inchargeFilter?: string;
+  statusFilter?: string;
+  visitedFilter?: string;
   doorList: { list: any[] };
   selectedColumns?: any[]; 
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
@@ -24,6 +26,8 @@ const DoorManagementTable: React.FC<Props> = ({
   query = "",
   filterQuery = { name: "", value: "" },
   inchargeFilter = "",
+  statusFilter = "",
+  visitedFilter = "",
   doorList,
   onInchargeChange,
 }) => {
@@ -36,6 +40,8 @@ const DoorManagementTable: React.FC<Props> = ({
     const q = query.toLowerCase();
     const fVal = filterQuery.value.toLowerCase();
     const rVal = inchargeFilter.toLowerCase();
+    const sVal = statusFilter.toLowerCase();
+    const vVal = visitedFilter.toLowerCase();
 
     const filtered = doorList.filter((item: any) => {
       const allValues = [
@@ -51,12 +57,14 @@ const DoorManagementTable: React.FC<Props> = ({
       const matchesQuery = q === "" ? true : allValues.some((v) => v.includes(q));
       const matchesStatus = fVal === "" ? true : item.status.toLowerCase() === fVal;
       const matchesIncharge= rVal === "" ? true : item.incharge.toLowerCase() === rVal;
+      const matchesStatusFilter = sVal === "" ? true : (item.status || "").toLowerCase() === sVal;
+      const matchesVisitedFilter = vVal === "" ? true : (item.visited || "").toLowerCase() === vVal;
 
-      return matchesQuery && matchesStatus && matchesIncharge;
+      return matchesQuery && matchesStatus && matchesIncharge && matchesStatusFilter && matchesVisitedFilter;
     });
 
     setFilteredItems({ list: filtered });
-  }, [query, filterQuery, inchargeFilter, doorList]);
+  }, [query, filterQuery, inchargeFilter, statusFilter, visitedFilter, doorList]);
 
   const handleInchargeChange = async (doorNo: string, newIncharge: string) => {
     setFilteredItems((prev) => ({

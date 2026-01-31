@@ -5,6 +5,8 @@ import "./DoorManagement.css";
 import SearchBar from "../searchBar/SearchBar";
 import FilterComponent from "../filter/FilterComponent";
 import InchargeFilter from "../filter/InchargeFilter";
+import StatusFilter from "../filter/StatusFilter";
+import VisitedFilter from "../filter/VisitedFilter";
 import DoorManagementTable from "../Table/DoorManagementTable";
 import { toCamelCase } from "../../helpers/utils";
 import { useAuth } from "../../contexts/AuthContext";
@@ -17,6 +19,8 @@ const DoorManagement: React.FC = () => {
   const [selectedColumns, setSelectedColumns] = useState<any[]>([]);
   const [query, setQuery] = useState("");
   const [inchargeFilter, setInchargeFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [visitedFilter, setVisitedFilter] = useState("");
   const [filterQuery, setFilterQuery] = useState({ name: "", value: "" });
 
   useEffect(() => {
@@ -59,7 +63,7 @@ const DoorManagement: React.FC = () => {
       <header className="asset-header">
         <div>
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2 className="asset-title">Voter Management System</h2>
+            <h2 className="asset-title">Team Mohsin Bhai!</h2>
           </Link>
           <p className="asset-subtitle">Manage Votes Allocation</p>
         </div>
@@ -82,12 +86,16 @@ const DoorManagement: React.FC = () => {
         <SearchBar query={query} setQuery={setQuery} />
         <FilterComponent setFilterQuery={setFilterQuery} />
         <InchargeFilter incharge={inchargeFilter} setIncharge={setInchargeFilter} />
+        <StatusFilter status={statusFilter} setStatus={setStatusFilter} />
+        <VisitedFilter visited={visitedFilter} setVisited={setVisitedFilter} />
       </div>
 
       <DoorManagementTable
         query={query}
         filterQuery={filterQuery}
         inchargeFilter={inchargeFilter}
+        statusFilter={statusFilter}
+        visitedFilter={visitedFilter}
         doorList={doorList}
         selectedColumns={selectedColumns}
         

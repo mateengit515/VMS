@@ -12,6 +12,11 @@ type Props = {
   onStatusChange?: (epicNumber: string, newStatus: string) => void;
 };
 
+const STATUS_OPTIONS = [
+  { value: "NA", label: "NA", color: "#6b7280" },
+  { value: "Available", label: "Available", color: "#22c55e" }
+];
+
 const VoterManagementTable: React.FC<Props> = ({
   query = "",
   filterQuery = { name: "", value: "" },
@@ -51,6 +56,33 @@ const VoterManagementTable: React.FC<Props> = ({
 
     setFilteredItems({ list: filtered });
   }, [query, filterQuery, statusFilter, voterList]);
+
+  const handleStatusChange = async (epicNo: string, newStatus: string) => {
+    setFilteredItems((prev) => ({
+      list: prev.list.map((item) =>
+        item["epic_no"] === epicNo ? { ...item, status: newStatus } : item
+      ),
+    }));
+
+    try {
+      const session = await fetchAuthSession();
+      const token = session.tokens?.idToken?.toString();
+      
+      await fetch("http://localhost:8080/api/vi/voters/update-status", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ epic_no: epicNo, status: newStatus }),
+      });
+      console.log("✅ Status updated successfully");
+    } catch (error) {
+      console.error("Failed to update status:", error);
+    }
+
+    onStatusChange?.(epicNo, newStatus);
+  };
 
   const handleContactChange = (epicNo: string, value: string) => {
     // Only allow numeric input, max 10 digits
@@ -109,6 +141,7 @@ const VoterManagementTable: React.FC<Props> = ({
           <tr>
             <th>SLNo.</th>
             <th>Name</th>
+            <th>Status</th>
             <th>Contact Number</th>
             <th>EPIC No.</th>
             <th>Sex</th>
@@ -123,6 +156,26 @@ const VoterManagementTable: React.FC<Props> = ({
               <tr key={i}>
                 <td>{a["serial_no"]}</td>
                 <td>{a["name"]}</td>
+                <td className="status-cell">
+                  <select
+                    className="status-dropdown"
+                    value={a.status || "NA"}
+                    style={{ 
+                      backgroundColor: STATUS_OPTIONS.find(s => s.value === (a.status || "NA"))?.color || "#6b7280", 
+                      color: "white",
+                      fontWeight: 600
+                    }}
+                    onChange={(e) =>
+                      handleStatusChange(a["epic_no"], e.target.value)
+                    }
+                  >
+                    {STATUS_OPTIONS.map((s) => (
+                      <option key={s.value} value={s.value}>
+                        {s.label}
+                      </option>
+                    ))}
+                  </select>
+                </td>
                 <td>
                   <input
                     type="text"
@@ -147,7 +200,7 @@ const VoterManagementTable: React.FC<Props> = ({
             ))
           ) : (
             <tr>
-              <td colSpan={8} style={{ textAlign: "center" }}>
+              <td colSpan={9} style={{ textAlign: "center" }}>
                 No assignments found
               </td>
             </tr>

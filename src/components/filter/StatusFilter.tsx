@@ -9,7 +9,7 @@ export type StatusFilterProps = {
   setStatus: (status: string) => void;
 };
 
-const STATUS_OPTIONS = ["NA", "Available"];
+const STATUS_OPTIONS = ["green", "orange", "red"];
 
 const StatusFilter: React.FC<StatusFilterProps> = ({ status, setStatus }) => {
   return (
@@ -26,7 +26,7 @@ const StatusFilter: React.FC<StatusFilterProps> = ({ status, setStatus }) => {
         <option value="">All Status</option>
         {STATUS_OPTIONS.map((s) => (
           <option key={s} value={s}>
-            {s}
+            {s.charAt(0).toUpperCase() + s.slice(1)}
           </option>
         ))}
       </select>

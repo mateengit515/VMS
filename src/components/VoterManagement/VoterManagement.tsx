@@ -54,7 +54,7 @@ const VoterManagement: React.FC = () => {
       <header className="asset-header">
         <div>
           <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <h2 className="asset-title">Voter Management System</h2>
+            <h2 className="asset-title">Team Mohsin Bhai!</h2>
           </Link>
           <p className="asset-subtitle">Manage Votes Allocation</p>
         </div>

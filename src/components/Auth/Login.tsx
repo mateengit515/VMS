@@ -22,7 +22,7 @@ const Login: React.FC = () => {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1 className="login-title">Voter Management System</h1>
+        <h1 className="login-title">Team Mohsin Bhai!</h1>
         <p className="login-subtitle">Sign in to continue</p>
         <Authenticator
           loginMechanisms={['username']}

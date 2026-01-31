@@ -41,7 +41,7 @@ const VoterManagement: React.FC = () => {
     <div className="asset-assignment-page">
       <header className="asset-header">
         <div>
-          <h2 className="asset-title">Voter Management System</h2>
+          <h2 className="asset-title">Mohsin Bhai Team</h2>
           <p className="asset-subtitle">Manage Votes Allocation</p>
         </div>
         <button className="assign-btn">+ Assign Now</button>
