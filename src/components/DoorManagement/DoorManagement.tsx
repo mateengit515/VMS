@@ -104,6 +104,7 @@ const DoorManagement: React.FC = () => {
         visitedFilter={visitedFilter}
         doorList={doorList}
         selectedColumns={selectedColumns}
+        userRole={userInfo?.role}
         
       />
     </div>

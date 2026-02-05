@@ -10,7 +10,8 @@ type Props = {
   statusFilter?: string;
   visitedFilter?: string;
   doorList: { list: any[] };
-  selectedColumns?: any[]; 
+  selectedColumns?: any[];
+  userRole?: string;
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
 };
 
@@ -29,6 +30,7 @@ const DoorManagementTable: React.FC<Props> = ({
   statusFilter = "",
   visitedFilter = "",
   doorList,
+  userRole = "admin",
   onInchargeChange,
 }) => {
   const [filteredItems, setFilteredItems] = useState<{ list: any[] }>({ list: [] });
@@ -192,19 +194,23 @@ const DoorManagementTable: React.FC<Props> = ({
                 </td>
 
                 <td className="status-cell">
-                  <select
-                    className="status-dropdown"
-                    value={a.incharge}
-                    onChange={(e) =>
-                      handleInchargeChange(a["doorNo"], e.target.value)
-                    }
-                  >
-                    {INCHARGE_OPTIONS.map((s) => (
-                      <option key={s} value={s}>
-                        {s}
-                      </option>
-                    ))}
-                  </select>
+                  {userRole === 'admin' ? (
+                    <select
+                      className="status-dropdown"
+                      value={a.incharge}
+                      onChange={(e) =>
+                        handleInchargeChange(a["doorNo"], e.target.value)
+                      }
+                    >
+                      {INCHARGE_OPTIONS.map((s) => (
+                        <option key={s} value={s}>
+                          {s}
+                        </option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span>{a.incharge}</span>
+                  )}
                 </td>
                 <td>{a["houseTotal"]}</td>
                 <td className="status-cell">
