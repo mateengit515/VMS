@@ -14,7 +14,7 @@ type Props = {
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
 };
 
-const INCHARGE_OPTIONS = ["NA","Mujju", "Salman", "Meraj", "Nouman", "Omair"];
+const INCHARGE_OPTIONS = ["NA","Mujju", "Salman", "Meraj", "Nouman", "Omair", "Furqan", "Rayyan", "Zain", "Isam", "Tahoor", "Saad", "Shoaib", "Zaka", "Fazal", "Abbu", "Ikram", "Saddam", "Umair_M"];
 const STATUS_OPTIONS = [
   { value: "green", label: "Green", color: "#10b981" },
   { value: "orange", label: "Orange", color: "#f97316" },
