@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { CSVLink } from 'react-csv';
 import MohsinLogo from "../../images/Mohsin.png";
 import "./DoorManagement.css";
 import SearchBar from "../searchBar/SearchBar";
@@ -23,6 +24,7 @@ const DoorManagement: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const [visitedFilter, setVisitedFilter] = useState("");
   const [filterQuery, setFilterQuery] = useState({ name: "", value: "" });
+  const [filteredDoorList, setFilteredDoorList] = useState<any[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -59,6 +61,16 @@ const DoorManagement: React.FC = () => {
     };
   }, []);
 
+  const csvHeaders = [
+    { label: "Door No", key: "doorNo" },
+    { label: "Incharge", key: "incharge" },
+    { label: "House Total", key: "houseTotal" },
+    { label: "Voters Available", key: "availableCount" },
+    { label: "Status", key: "status" },
+    { label: "Visited", key: "visited" },
+    { label: "Comments", key: "comments" }
+  ];
+
   return (
     <div className="asset-assignment-page">
       <header className="asset-header">
@@ -78,6 +90,15 @@ const DoorManagement: React.FC = () => {
               </p>
             </div>
           )}
+          <CSVLink 
+            data={filteredDoorList}
+            headers={csvHeaders}
+            filename={`doors-${new Date().toISOString().split('T')[0]}.csv`}
+            className="assign-btn"
+            style={{ textDecoration: 'none' }}
+          >
+            Export CSV
+          </CSVLink>
           <button className="assign-btn" onClick={logout}>Logout</button>
         </div>
       </header>
@@ -105,6 +126,7 @@ const DoorManagement: React.FC = () => {
         doorList={doorList}
         selectedColumns={selectedColumns}
         userRole={userInfo?.role}
+        onFilterChange={setFilteredDoorList}
         
       />
     </div>

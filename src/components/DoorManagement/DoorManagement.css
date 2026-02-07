@@ -98,6 +98,10 @@
     padding: 12px;
     font-size: 16px;
     min-height: 44px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .filters {

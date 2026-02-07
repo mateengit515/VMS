@@ -10,6 +10,7 @@ type Props = {
   selectedColumns?: any[]; 
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
   onStatusChange?: (epicNumber: string, newStatus: string) => void;
+  onFilterChange?: (filteredData: any[]) => void;
 };
 
 const STATUS_OPTIONS = [
@@ -23,6 +24,7 @@ const VoterManagementTable: React.FC<Props> = ({
   statusFilter = "",
   voterList,
   onStatusChange,
+  onFilterChange,
 }) => {
   const [filteredItems, setFilteredItems] = useState<{ list: any[] }>({ list: [] });
   const [editingContact, setEditingContact] = useState<{[key: string]: string}>({});
@@ -55,7 +57,8 @@ const VoterManagementTable: React.FC<Props> = ({
     });
 
     setFilteredItems({ list: filtered });
-  }, [query, filterQuery, statusFilter, voterList]);
+    onFilterChange?.(filtered);
+  }, [query, filterQuery, statusFilter, voterList, onFilterChange]);
 
   const handleStatusChange = async (epicNo: string, newStatus: string) => {
     setFilteredItems((prev) => ({

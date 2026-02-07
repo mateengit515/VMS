@@ -13,6 +13,7 @@ type Props = {
   selectedColumns?: any[];
   userRole?: string;
   onInchargeChange?: (epicNumber: string, newIncharge: string) => void;
+  onFilterChange?: (filteredData: any[]) => void;
 };
 
 const INCHARGE_OPTIONS = ["NA","Mujju", "Salman", "Meraj", "Nouman", "Omair", "Furqan", "Rayyan", "Zain", "Isam", "Tahoor", "Saad", "Shoaib", "Zaka", "Fazal", "Abbu", "Ikram", "Saddam", "Umair_M", "Affan", "Faizan", "Maqsood", "Yasar", "Qayam", "Arshan", "Ilyaz", "Shoaibkhan", "Uzair", "Rahil", "Shadab", "Almas", "Viqaar", "Fahad", "Kareem", "Farhan", "Murtuza", "Inam", "Riyan", "HafizSaad", "Ali", "Aman", "Arman", "Anas", "Imran", "Nabeel"];
@@ -32,6 +33,7 @@ const DoorManagementTable: React.FC<Props> = ({
   doorList,
   userRole = "admin",
   onInchargeChange,
+  onFilterChange,
 }) => {
   const [filteredItems, setFilteredItems] = useState<{ list: any[] }>({ list: [] });
 
@@ -66,7 +68,8 @@ const DoorManagementTable: React.FC<Props> = ({
     });
 
     setFilteredItems({ list: filtered });
-  }, [query, filterQuery, inchargeFilter, statusFilter, visitedFilter, doorList]);
+    onFilterChange?.(filtered);
+  }, [query, filterQuery, inchargeFilter, statusFilter, visitedFilter, doorList, onFilterChange]);
 
   const handleInchargeChange = async (doorNo: string, newIncharge: string) => {
     setFilteredItems((prev) => ({
@@ -178,6 +181,7 @@ const DoorManagementTable: React.FC<Props> = ({
              <th>Door No.</th>
              <th>Incharge</th>
             <th>House Total</th>
+            <th>Voters Available</th>
             <th>Status</th>
             <th>Visited</th>
             <th>Comments</th>
@@ -213,6 +217,7 @@ const DoorManagementTable: React.FC<Props> = ({
                   )}
                 </td>
                 <td>{a["houseTotal"]}</td>
+                <td>{a["availableCount"] || 0}</td>
                 <td className="status-cell">
                   <select
                     className="color-status-dropdown"
@@ -263,7 +268,7 @@ const DoorManagementTable: React.FC<Props> = ({
             ))
           ) : (
             <tr>
-              <td colSpan={6} style={{ textAlign: "center" }}>
+              <td colSpan={7} style={{ textAlign: "center" }}>
                 No assignments found
               </td>
             </tr>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
+import { CSVLink } from 'react-csv';
 import MohsinLogo from "../../images/Mohsin.png";
 import "./VoterManagement.css";
 import SearchBar from "../searchBar/SearchBar";
@@ -20,6 +21,7 @@ const VoterManagement: React.FC = () => {
   const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [filterQuery, setFilterQuery] = useState({ name: "", value: "" });
+  const [filteredVoterList, setFilteredVoterList] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchVoters = async () => {
@@ -50,6 +52,18 @@ const VoterManagement: React.FC = () => {
     fetchVoters();
   }, [location.pathname]);
 
+  const csvHeaders = [
+    { label: "SL No", key: "serial_no" },
+    { label: "Name", key: "name" },
+    { label: "Status", key: "status" },
+    { label: "Contact Number", key: "contact_number" },
+    { label: "EPIC No", key: "epic_no" },
+    { label: "Sex", key: "sex" },
+    { label: "Age", key: "age" },
+    { label: "Door No", key: "door_no" },
+    { label: "Incharge", key: "incharge" }
+  ];
+
   return (
     <div className="asset-assignment-page">
       <header className="asset-header">
@@ -69,6 +83,15 @@ const VoterManagement: React.FC = () => {
               </p>
             </div>
           )}
+          <CSVLink 
+            data={filteredVoterList}
+            headers={csvHeaders}
+            filename={`voters-${new Date().toISOString().split('T')[0]}.csv`}
+            className="assign-btn"
+            style={{ textDecoration: 'none' }}
+          >
+            Export CSV
+          </CSVLink>
           <button className="assign-btn" onClick={logout}>Logout</button>
         </div>
       </header>
@@ -107,6 +130,7 @@ const VoterManagement: React.FC = () => {
         statusFilter={statusFilter}
         voterList={voterList}
         selectedColumns={selectedColumns}
+        onFilterChange={setFilteredVoterList}
         
       />
     </div>
