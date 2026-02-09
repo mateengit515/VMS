@@ -90,6 +90,9 @@ const DoorManagement: React.FC = () => {
               </p>
             </div>
           )}
+          <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+            <button className="assign-btn">Dashboard</button>
+          </Link>
           <CSVLink 
             data={filteredDoorList}
             headers={csvHeaders}
